@@ -1,6 +1,9 @@
 */Library
 */Temp
 */obj
+*/Logs
+*/.vs
+*/.vsconfig
 *.apk
 *.csproj
 *.unityproj

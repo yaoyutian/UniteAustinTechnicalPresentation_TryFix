@@ -28,13 +28,13 @@ public struct MinionBitmask : IComponentData
 
 	#region Properties
 
-	public bool IsFriendly
+	public boolean IsFriendly
 	{
 		get { return IsBit(0); }
 		set { SetBit(0, value); }
 	}
 
-	public bool IsSpawned
+	public boolean IsSpawned
 	{
 		get { return IsBit(1); }
 		set { SetBit(1, value); }

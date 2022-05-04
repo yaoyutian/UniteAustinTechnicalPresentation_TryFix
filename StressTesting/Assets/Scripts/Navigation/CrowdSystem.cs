@@ -26,8 +26,8 @@ public partial class CrowdSystem : JobComponentSystem
     [Inject]
     CrowdGroup m_Crowd;
 
-    NativeList<bool1> m_PlanPathForAgent;
-    NativeList<bool1> m_EmptyPlanPathForAgent;
+    NativeList<boolean> m_PlanPathForAgent;
+    NativeList<boolean> m_EmptyPlanPathForAgent;
     NativeList<uint> m_PathRequestIdForAgent;
     NativeList<PathQueryQueueEcs.RequestEcs> m_PathRequests;
     NativeArray<int> m_PathRequestsRange;
@@ -43,7 +43,7 @@ public partial class CrowdSystem : JobComponentSystem
 
     NavMeshQuery m_NavMeshQuery;
     PathQueryQueueEcs[] m_QueryQueues;
-    bool[] m_IsEmptyQueryQueue;
+    boolean[] m_IsEmptyQueryQueue;
     UpdateQueriesJob[] m_QueryJobs;
     NativeArray<JobHandle> m_AfterQueriesProcessed;
     JobHandle m_AfterQueriesCleanup;
@@ -76,8 +76,8 @@ public partial class CrowdSystem : JobComponentSystem
         var queryCount = world.IsValid() ? k_QueryCount : 0;
 
         var agentCount = world.IsValid() ? capacity : 0;
-        m_PlanPathForAgent = new NativeList<bool1>(agentCount, Allocator.Persistent);
-        m_EmptyPlanPathForAgent = new NativeList<bool1>(0, Allocator.Persistent);
+        m_PlanPathForAgent = new NativeList<boolean>(agentCount, Allocator.Persistent);
+        m_EmptyPlanPathForAgent = new NativeList<boolean>(0, Allocator.Persistent);
         m_PathRequestIdForAgent = new NativeList<uint>(agentCount, Allocator.Persistent);
         m_PathRequests = new NativeList<PathQueryQueueEcs.RequestEcs>(k_PathRequestsPerTick, Allocator.Persistent);
         m_PathRequests.ResizeUninitialized(k_PathRequestsPerTick);
@@ -98,7 +98,7 @@ public partial class CrowdSystem : JobComponentSystem
         m_AfterQueriesProcessed = new NativeArray<JobHandle>(queryCount, Allocator.Persistent);
         m_AfterQueriesCleanup = new JobHandle();
         m_AfterMovedRequestsForgotten = new JobHandle();
-        m_IsEmptyQueryQueue = new bool[queryCount];
+        m_IsEmptyQueryQueue = new boolean[queryCount];
         for (var i = 0; i < m_QueryQueues.Length; i++)
         {
             m_QueryQueues[i] = new PathQueryQueueEcs(k_MaxQueryNodes, k_MaxRequestsPerQuery);

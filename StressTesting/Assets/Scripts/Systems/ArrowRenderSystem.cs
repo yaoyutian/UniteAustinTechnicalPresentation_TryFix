@@ -3,6 +3,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Burst;
 
 [UpdateAfter(typeof(ArrowSystem))]
 public class ArrowRenderSystem : JobComponentSystem
@@ -10,7 +11,8 @@ public class ArrowRenderSystem : JobComponentSystem
 	public struct Arrows
 	{
 		public ComponentDataArray<ArrowData> data;
-		public int Length;
+		//[ReadOnly]
+		public readonly int Length;
 	}
 
 	[Inject]
@@ -97,7 +99,7 @@ public class ArrowRenderSystem : JobComponentSystem
 		return calculateMatricesFence;
 	}
 
-	[ComputeJobOptimization]
+	[BurstCompile]
 	private struct CalculateArrowTransformationMatrix : IJobParallelFor
 	{
 		[ReadOnly]

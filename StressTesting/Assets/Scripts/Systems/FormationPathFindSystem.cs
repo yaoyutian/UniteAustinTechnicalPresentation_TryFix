@@ -17,7 +17,7 @@ public class FormationPathFindSystem : JobComponentSystem
         public ComponentDataArray<CrowdAgentNavigator> navigators;
         public ComponentDataArray<FormationIntegrityData> integrityData;
 
-        public int Length;
+        public readonly int Length;
     }
 
     public struct Minions
@@ -27,7 +27,7 @@ public class FormationPathFindSystem : JobComponentSystem
         public FixedArrayArray<float3> paths;
         public ComponentDataArray<NavMeshLocationComponent> navMeshLocation;
         public EntityArray entities;
-        public int Length;
+        public readonly int Length;
     }
     [Inject]
     FixedArrayFromEntity<float3> minionPaths;
@@ -196,7 +196,7 @@ public class FormationPathFindSystem : JobComponentSystem
         return JobHandle.CombineDependencies(assignFence, pathFindFence);
     }
 
-    [ComputeJobOptimization]
+    [Unity.Burst.BurstCompile]
     private struct MinionPathFind : IJob
     {
         public NavMeshQuery query;
@@ -302,7 +302,7 @@ public class FormationPathFindSystem : JobComponentSystem
             pathsInfo[entity] = pathInfo;
         }
     }
-    [ComputeJobOptimization]
+    [Unity.Burst.BurstCompile]
     private struct MinionFollowPath : IJobParallelFor
     {
         [ReadOnly]
@@ -372,7 +372,7 @@ public class FormationPathFindSystem : JobComponentSystem
         }
     }
 
-    [ComputeJobOptimization]
+    [Unity.Burst.BurstCompile]
     private struct AssignFormationSpeed : IJobParallelFor
     {
         [ReadOnly]

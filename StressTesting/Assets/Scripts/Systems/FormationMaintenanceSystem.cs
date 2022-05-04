@@ -26,8 +26,8 @@ public class FormationMaintenanceSystem : JobComponentSystem
 		public ComponentDataArray<IndexInFormationData> indicesInFormation;
 
 		public EntityArray entities;
-
-		public int Length;
+		//[ReadOnly]
+		public readonly int Length;
 	}
 	
 	[Inject]
@@ -60,7 +60,7 @@ public class FormationMaintenanceSystem : JobComponentSystem
 		return rearrangeFence;
 	}
 
-	[ComputeJobOptimization]
+	[Unity.Burst.BurstCompile]
 	private struct ClearUnitDataJob : IJobParallelFor
 	{
 		[ReadOnly]
@@ -79,7 +79,7 @@ public class FormationMaintenanceSystem : JobComponentSystem
 		}
 	}
 
-	[ComputeJobOptimization]
+	[Unity.Burst.BurstCompile]
 	private struct FillUnitDataJob : IJob // this can't be parallel job because of FromEntity does not support parallel writing
 	{
 		public FixedArrayFromEntity<EntityRef> formationUnitData;
@@ -103,7 +103,7 @@ public class FormationMaintenanceSystem : JobComponentSystem
 		}
 	}
 
-	[ComputeJobOptimization]
+	[Unity.Burst.BurstCompile]
 	private struct RearrangeUnitIndexesJob : IJobParallelFor
 	{
 		[ReadOnly]

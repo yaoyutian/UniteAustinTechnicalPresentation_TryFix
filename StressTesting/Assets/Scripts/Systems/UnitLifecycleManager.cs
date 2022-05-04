@@ -21,7 +21,7 @@ public class UnitLifecycleManager : JobComponentSystem
 		public ComponentDataArray<MinionData> data;
 		public ComponentDataArray<MinionPathData> pathsInfo;
 		public EntityArray entities;
-		public int Length;
+		public readonly int Length;
 	}
 
 	public struct DyingUnits
@@ -29,7 +29,7 @@ public class UnitLifecycleManager : JobComponentSystem
 		public ComponentDataArray<DyingUnitData> dyingData;
 		public EntityArray entities;
 		public ComponentDataArray<UnitTransformData> transforms;
-		public int Length;
+		public readonly int Length;
 	}
 
 	public struct DyingArrows
@@ -37,7 +37,7 @@ public class UnitLifecycleManager : JobComponentSystem
 		public ComponentDataArray<DyingUnitData> dyingData;
 		public EntityArray entities;
 		public ComponentDataArray<ArrowData> data;
-		public int Length;
+		public readonly int Length;
 	}
 
 	[Inject]
@@ -240,7 +240,7 @@ public class UnitLifecycleManager : JobComponentSystem
 		return new JobHandle();
 	}
 
-	[ComputeJobOptimization]
+	[Unity.Burst.BurstCompile]
 	private struct CleanupJob : IJobParallelFor
 	{
 		[ReadOnly]
@@ -259,7 +259,7 @@ public class UnitLifecycleManager : JobComponentSystem
 		}
 	}
 
-	[ComputeJobOptimization]
+	[Unity.Burst.BurstCompile]
 	private struct MoveUnitsBelowGround : IJobParallelFor
 	{
 		[ReadOnly]

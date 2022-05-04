@@ -2,6 +2,7 @@
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Entities;
+using Unity.Burst;
 
 [UpdateAfter(typeof(PrepareMinionTargetsSystem))]
 public class FormationIntegritySystem : JobComponentSystem
@@ -11,8 +12,8 @@ public class FormationIntegritySystem : JobComponentSystem
         public ComponentDataArray<FormationIntegrityData> integrityData;
         public ComponentDataArray<FormationData> data;
         public FixedArrayArray<EntityRef> unitData;
-
-        public int Length;
+        //[ReadOnly]
+        public readonly int Length;
     }
 
     [Inject]
@@ -46,7 +47,7 @@ public class FormationIntegritySystem : JobComponentSystem
         return CalculateIntegrityFence;
     }
 
-    [ComputeJobOptimization]
+    [BurstCompile]
     private struct CalculateIntegrityDataJob : IJobParallelFor
     {
         public ComponentDataArray<FormationIntegrityData> formationIntegrityData;

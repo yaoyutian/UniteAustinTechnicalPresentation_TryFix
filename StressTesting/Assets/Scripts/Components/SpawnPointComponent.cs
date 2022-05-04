@@ -7,7 +7,7 @@ using Unity.Entities;
 public class SpawnPointComponent : MonoBehaviour
 {
 	public UnitType Type;
-	public bool IsFriendly;
+	public boolean IsFriendly;
 
 	[NonSerialized]
 	public float ElapsedTime;

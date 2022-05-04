@@ -14,7 +14,7 @@ public class PrepareMinionTargetsSystem : JobComponentSystem
         public ComponentDataArray<MinionBitmask> bitmask;
         public ComponentDataArray<IndexInFormationData> indicesInFormation;
         public ComponentDataArray<MinionPathData> pathInfos;
-        public int Length;
+        public readonly int Length;
     }
 
     [Inject]
@@ -45,7 +45,7 @@ public class PrepareMinionTargetsSystem : JobComponentSystem
         return PrepareTargetsFence;
     }
 
-    [ComputeJobOptimization]
+    [Unity.Burst.BurstCompile]
     private struct PrepareMinonTargets : IJobParallelFor
     {
         [ReadOnly]

@@ -48,7 +48,8 @@ public class SpellSystem : JobComponentSystem
 		public ComponentDataArray<UnitTransformData> transforms;
 		public ComponentDataArray<RigidbodyData> rigidbodies;
 		public EntityArray entities;
-		public int Length;
+		//[ReadOnly]
+		public readonly int Length;
 	}
 
 	//public struct Formations
@@ -182,12 +183,12 @@ public class SpellSystem : JobComponentSystem
 		public float2 blastDirectionModifier;
 		public float3 explosionPosition;
 		public float explosionDistance;
-		public bool1 useInvertedDistance;
+		public boolean useInvertedDistance;
 		public float verticalComponentFactor;
 		public float randomHorizontal;
 	}
 
-	[ComputeJobOptimization]
+	[Unity.Burst.BurstCompile]
 	public struct ApplyExplosionJob : IJobParallelFor
 	{
 		[ReadOnly]

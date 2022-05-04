@@ -11,6 +11,7 @@ using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.Rendering;
+using Unity.Burst;
 
 public enum UnitType
 {
@@ -68,7 +69,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 		public int TextureWidth;
 
 		public float AnimationLength;
-		public bool1 Looping;
+		public boolean Looping;
 	}
 
 	#region Per unit type tuples
@@ -79,7 +80,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 		[ReadOnly]
 		public ComponentDataArray<UnitTransformData> transforms;
 
-		public int Length;
+		public readonly int Length;
 
 	}
 
@@ -91,7 +92,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 		[ReadOnly]
 		public ComponentDataArray<UnitTransformData> transforms;
 
-		public int Length;
+		public readonly int Length;
 	}
 
 	public struct TankUnits
@@ -102,7 +103,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 		[ReadOnly]
 		public ComponentDataArray<UnitTransformData> transforms;
 
-		public int Length;
+		public readonly int Length;
 	}
 
 
@@ -114,7 +115,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 		[ReadOnly]
 		public ComponentDataArray<UnitTransformData> transforms;
 
-		public int Length;
+		public readonly int Length;
 	}
 
 	public struct SkeletonUnits
@@ -124,7 +125,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 		[ReadOnly]
 		public ComponentDataArray<UnitTransformData> transforms;
 
-		public int Length;
+		public readonly int Length;
 	}
 
 	[Inject]
@@ -152,7 +153,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 
 	#region Jobs
 
-	[ComputeJobOptimization]
+	[BurstCompile]
 	struct PrepareAnimatorDataJob : IJobParallelFor
 	{
 		public ComponentDataArray<TextureAnimatorData> textureAnimatorData;
@@ -301,7 +302,7 @@ public class TextureAnimatorSystem : JobComponentSystem
 #endif
 
 #if USE_SAFE_JOBS
-	[ComputeJobOptimization]
+	[BurstCompile]
 	struct CullAndComputeParametersSafe : IJob
 	{
 		[ReadOnly]

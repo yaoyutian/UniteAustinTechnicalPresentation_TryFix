@@ -13,11 +13,11 @@ public struct CrowdAgentNavigator : IComponentData
     public float speed;
     public float nextCornerSide;
     public float3 steeringTarget;
-    public bool1 newDestinationRequested;
-    public bool1 goToDestination;
-    public bool1 destinationInView;
-    public bool1 destinationReached;
-    public bool1 active;
+    public boolean newDestinationRequested;
+    public boolean goToDestination;
+    public boolean destinationInView;
+    public boolean destinationReached;
+    public boolean active;
 
     public void MoveTo(float3 dest)
     {

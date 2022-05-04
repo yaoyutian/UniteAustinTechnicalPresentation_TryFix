@@ -1,4 +1,5 @@
 using System;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -16,7 +17,7 @@ public partial class CrowdSystem
         [ReadOnly]
         public NativeArray<uint> pathRequestIdForAgent;
 
-        public NativeArray<bool1> planPathForAgent;
+        public NativeArray<boolean> planPathForAgent;
 
         public void Execute(int index)
         {
@@ -40,7 +41,7 @@ public partial class CrowdSystem
 
         public ComponentDataArray<CrowdAgentNavigator> agentNavigators;
 
-        public NativeArray<bool1> planPathForAgent;
+        public NativeArray<boolean> planPathForAgent;
         public NativeArray<uint> pathRequestIdForAgent;
         public NativeArray<PathQueryQueueEcs.RequestEcs> pathRequests;
         public NativeArray<int> pathRequestsRange;
@@ -242,7 +243,7 @@ public partial class CrowdSystem
         }
     }
 
-    [ComputeJobOptimization]
+    [BurstCompile]
     public struct UpdateVelocityJob : IJobParallelFor
     {
         [ReadOnly]

@@ -19,8 +19,8 @@ public class PrepareBucketsSystem : JobComponentSystem
 		public ComponentDataArray<UnitTransformData> transforms;
 		[ReadOnly]
 		public ComponentDataArray<MinionBitmask> bitmask;
-
-		public int Length;
+		//[ReadOnly]
+		public readonly int Length;
 	}
 	
 	[Inject]
